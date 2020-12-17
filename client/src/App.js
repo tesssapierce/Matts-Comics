@@ -4,12 +4,16 @@ import Books from "./pages/Books";
 import Detail from "./pages/Detail";
 import NoMatch from "./pages/NoMatch";
 import Nav from "./components/Nav";
+import ComingSoon from "./pages/ComingSoon"
 
 function App() {
   return (
     <Router>
       <div>
-        <Nav />
+        <Route exact path="/">
+          <ComingSoon />
+        </Route>
+        {/* <Nav />
         <Switch>
           <Route exact path={["/", "/books"]}>
             <Books />
@@ -20,7 +24,7 @@ function App() {
           <Route>
             <NoMatch />
           </Route>
-        </Switch>
+        </Switch> */}
       </div>
     </Router>
   );
