@@ -15,7 +15,6 @@ function ComicMain() {
 
     return (
       <>
-      <Nav />
       <div className="container-fluid containerStyle">
         <div className="row">
           <div className="col-12">

@@ -50,10 +50,25 @@
   transform: scale(1.1);
 }
 
+/* Resuable */
+
 .containerStyle{
   background-color: white;
   border: 5px black solid;
   padding: 10px;
   margin: 10px;
   width: auto;
+}
+
+h1, h2 {
+  font-family: 'Bangers', cursive;
+  color: #fc0300  ;
+  text-shadow: -3px 3px #000000;
+  letter-spacing: 2px;
+}
+
+/* LogIn */
+
+.loginForm{
+  margin: 10px auto;
 }
