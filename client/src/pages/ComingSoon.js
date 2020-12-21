@@ -1,19 +1,22 @@
 import React from "react";
 import { Col, Row, Container } from "../components/Grid";
 import Jumbotron from "../components/Jumbotron";
+import logo from "../images/mattscomics.svg"
+import "../index.css"
 
 function ComingSoon() {
   return (
-    <Container fluid>
-      <Row>
-        <Col size="md-12">
-          <Jumbotron>
-            <h1>Coming Soon</h1>
-            <h2>Matt's Comics</h2>
-          </Jumbotron>
-        </Col>
-      </Row>
-    </Container>
+
+    <>
+      <div className="container-fluid">
+        <div className="row">
+          <div className="col-12 comingSoonHeader">
+            <img src={logo} className="logoImg" />
+            <h3 className="containerStyle comingSoon">coming soon</h3>
+          </div>
+        </div>
+      </div>
+    </>
   );
 }
 
