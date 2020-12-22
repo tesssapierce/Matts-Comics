@@ -67,6 +67,11 @@ h1, h2 {
   letter-spacing: 2px;
 }
 
+.centered {
+  text-align: center;
+  margin: 0 auto;
+}
+
 /* LogIn */
 
 .loginForm{
@@ -89,5 +94,57 @@ h1, h2 {
 }
 
 .card-img-top{
-  max-height: 20rem;
+  /* max-height: 20rem; */
+  object-fit: cover;
+}
+
+.searchForm{
+  right: 0;
+  position: absolute;
+  margin-right: 20px;
+}
+
+.browseHeader{
+  padding: 20px;
+}
+
+/* MODAL */
+
+.modal-content{
+  border: 5px solid black;
+}
+
+.modal-body{
+  background: linear-gradient(rgba(49, 116, 188, .7), rgba(33, 64, 153, .7)) !important;
+  padding:0px !important;
+}
+
+.modalBody2{
+  background-image:
+  radial-gradient(rgba(28, 112, 210, .7) 40%, transparent 0), 
+  radial-gradient(rgba(28, 112, 210, .7) 40%, transparent 0);
+background-size: 30px 30px;
+background-position: 0 0, 15px 15px;
+
+}
+
+.modalBody3{
+  padding: 20px;
+  margin: 0 auto;
+}
+
+.issuesTable{
+  background-color:rgba(255, 255, 255, .7);
+  border: 5px solid black;
+}
+
+
+/* MOBILE */
+
+@media only screen and (max-width: 800px) {
+  .searchForm{
+    right: auto;
+    position: inherit;
+    margin: 0 auto;
+  }
 }

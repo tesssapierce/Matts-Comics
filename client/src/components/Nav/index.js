@@ -34,10 +34,6 @@ function Nav(props) {
             <RBS.Nav.Link href="/">Sign In</RBS.Nav.Link>
             )}
           </RBS.Nav>
-          <RBS.Form inline>
-            <RBS.FormControl type="text" placeholder="Uncanny Xmen" className="mr-sm-2" value={formEntry.query}  onChange={handleInputChange} name="query"/>
-            <RBS.Button className="searchBtn" onClick={handleSubmit}>Search</RBS.Button>
-          </RBS.Form>
         </RBS.Navbar.Collapse>
       </RBS.Navbar>
     </div>
