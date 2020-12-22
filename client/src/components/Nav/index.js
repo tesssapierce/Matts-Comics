@@ -1,12 +1,20 @@
-import React, { useEffect } from "react";
+import React, { useState, useEffect } from "react"
 import * as RBS from "react-bootstrap";
 import logo from "../../images/mattscomics.svg"
 
 function Nav(props) {
 
+
+  const [formEntry, setFormEntry] = useState({})
+
+  function handleInputChange(event) {
+    const { name, value } = event.target;
+    setFormEntry({ ...formEntry, [name]: value })
+  };
+
   function handleSubmit(event){
     event.preventDefault()
-    props.setAuth(false)
+    props.searchQuery(formEntry.query)
   }
 
   return (
@@ -19,7 +27,7 @@ function Nav(props) {
         <RBS.Navbar.Collapse id="basic-navbar-nav">
           <RBS.Nav className="mr-auto navLinksCstm">
             <RBS.Nav.Link href="/comics">Home</RBS.Nav.Link>
-            <RBS.Nav.Link href="/manage">Browse</RBS.Nav.Link>
+            <RBS.Nav.Link href="/browse">Browse</RBS.Nav.Link>
             {props.isAuth ? (
             <RBS.Nav.Link href="/" onClick={handleSubmit}>Sign Out</RBS.Nav.Link>
             ):(
@@ -27,8 +35,8 @@ function Nav(props) {
             )}
           </RBS.Nav>
           <RBS.Form inline>
-            <RBS.FormControl type="text" placeholder="Uncanny Xmen" className="mr-sm-2" />
-            <RBS.Button className="searchBtn">Search</RBS.Button>
+            <RBS.FormControl type="text" placeholder="Uncanny Xmen" className="mr-sm-2" value={formEntry.query}  onChange={handleInputChange} name="query"/>
+            <RBS.Button className="searchBtn" onClick={handleSubmit}>Search</RBS.Button>
           </RBS.Form>
         </RBS.Navbar.Collapse>
       </RBS.Navbar>

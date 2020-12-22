@@ -7,10 +7,12 @@ import Nav from "./components/Nav";
 import ComingSoon from "./pages/ComingSoon"
 import ComicMain from "./pages/ComicMain"
 import Login from "./pages/Login"
+import Browse from "./pages/Browse"
 
 function App() {
 
   const [isAuth, setIsAuth] = useState(false)
+  const [query, setQuery] = useState("")
 
   function setAuth(formEntry) {
     console.log(formEntry)
@@ -39,10 +41,14 @@ function App() {
     localStorage.setItem("isAuth", JSON.stringify(isAuth))
   }
 
+  function searchQuery(query){
+    setQuery(query)
+  }
+
   return (
     <Router>
       <div>
-        <Nav isAuth={isAuth} setAuth={setAuth} />
+        <Nav isAuth={isAuth} setAuth={setAuth} searchQuery={searchQuery}/>
         <Switch>
           {isAuth ? (
             <>
@@ -52,11 +58,14 @@ function App() {
               <Route exact path="/comics">
                 <ComicMain />
               </Route>
+              <Route exact path="/browse">
+                <Browse query={query}/>
+              </Route>
             </>
           ) : (
               <>
                 <Route exact path="/">
-                  <Login setAuth={setAuth} />
+                  <Login setAuth={setAuth} isAuth={isAuth}/>
                 </Route>
               </>
             )}

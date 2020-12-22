@@ -72,3 +72,22 @@ h1, h2 {
 .loginForm{
   margin: 10px auto;
 }
+
+/* Browse */
+
+.loading{
+  margin: 0 auto;
+  text-align: center;
+  padding: 30px;
+}
+
+.browseCard{
+  margin: 5px;
+  padding: 5px;
+  width: 18rem;
+  min-height: 40rem;
+}
+
+.card-img-top{
+  max-height: 20rem;
+}
