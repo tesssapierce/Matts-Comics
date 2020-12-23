@@ -138,6 +138,19 @@ background-position: 0 0, 15px 15px;
   border: 5px solid black;
 }
 
+/* HOME */
+
+.seriesContainer{
+  padding: 20px;
+  margin: 20px;
+  border: 5px solid black;
+}
+
+.toggleSwitch{
+  margin: 0 auto;
+  text-align: center;
+  display: inherit;
+}
 
 /* MOBILE */
 
