@@ -21,7 +21,7 @@ function ComicMain() {
   const [toggleStatus, setToggleStatus] = useState(true)
   const [modalShow, setModalShow] = useState(false);
 
-  
+
   // Load all books and store them with setBooks
   useEffect(() => {
     getMattsComics()
@@ -37,7 +37,7 @@ function ComicMain() {
 
   function handleToggleChange() {
 
-    if (toggleStatus){
+    if (toggleStatus) {
       setToggleStatus(false)
     } else {
       setToggleStatus(true)
@@ -45,15 +45,15 @@ function ComicMain() {
 
   }
 
-  function toggleWords(){
-    if (toggleStatus){
+  function toggleWords() {
+    if (toggleStatus) {
       return ("own")
     } else {
       return ("need")
     }
   }
 
-  function handleNewSeries(){
+  function handleNewSeries() {
     setModalShow(true)
   }
 
@@ -71,7 +71,7 @@ function ComicMain() {
               <br />
               <Switch
                 checked={toggleStatus}
-                onChange={ () => {handleToggleChange()}}
+                onChange={() => { handleToggleChange() }}
                 onColor="#86d3ff"
                 onHandleColor="#2693e6"
                 handleDiameter={30}
@@ -85,23 +85,30 @@ function ComicMain() {
                 id="material-switch"
               />
             </label>
-
             <RBS.Button className="searchBtn" onClick={() => handleNewSeries()}>add series</RBS.Button>
-            
-
             {mattsComics.map(series => (
               <div className="seriesContainer">
                 <h2>{series.volume}</h2>
-                {series.issues.map(issue =>(
-                  issue.owned ? (
-                    <p>{issue.number}</p>
-                  ): (
-                    <></>
-                  )
-                ))}
+                {toggleStatus ? (
+                  series.issues.map(issue => (
+                    issue.owned ? (
+                      <p>{issue.number}</p>
+                    ) : (
+                        <></>
+                      )
+                  ))
+                ) : (
+                    series.issues.map(issue => (
+                      !issue.owned ? (
+                        <p>{issue.number}</p>
+                      ) : (
+                          <></>
+                        )
+                    ))
+                  )}
               </div>
             ))}
-            <Modal2 show={modalShow} onHide={() => setModalShow(false)}/>
+            <Modal2 show={modalShow} onHide={() => setModalShow(false)} />
           </div>
         </div>
       </div>

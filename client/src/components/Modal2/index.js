@@ -3,6 +3,7 @@
 import React, { useState, useEffect } from "react"
 import * as RBS from "react-bootstrap";
 import PulseLoader from "react-spinners/PulseLoader";
+import { FaPlus } from "react-icons/fa";
 
 function Modal(props) {
   const [isLoaded, setIsLoaded] = useState(false);
@@ -10,6 +11,7 @@ function Modal(props) {
   const [formEntry, setFormEntry] = useState({})
   const [query, setQuery] = useState("")
   const [items, setItems] = useState([]);
+  const [addSeries, setAddSeries] = useState({})
 
   useEffect(() => {
     getQuery()
@@ -41,6 +43,14 @@ function Modal(props) {
       )
   }
 
+  function handleSeriesAdd(item){
+    console.log(item)
+    setAddSeries(item)
+    document.getElementById("seriesSearch").style.display = "none"
+    document.getElementById("seriesConfirm").style.display = "inline"
+    // document.getElementsByClassName("seriesConfirm").style = "display: inline"
+  }
+
   return (
     <RBS.Modal
       {...props}
@@ -54,7 +64,7 @@ function Modal(props) {
         </RBS.Modal.Title>
       </RBS.Modal.Header>
       <RBS.Modal.Body>
-        <div className="seriesSearch">
+        <div className="seriesSearch" id="seriesSearch">
           {/* Search Form */}
           <div className="searchForm seriesSearchForm">
             <RBS.FormControl type="text" placeholder="Uncanny Xmen" className="mr-sm-2" value={formEntry.query} onChange={handleInputChange} name="query" />
@@ -63,18 +73,39 @@ function Modal(props) {
           {/* Results */}
           {isLoaded ? (
             <div className="row">
-
-              {items.map(item => (
                 <div className="col-12 col-sm-6 col-lg-3">
-                 <p>{item.name}</p>
-                 </div>
-              ))}
+                  <RBS.Table className="issuesTable" striped bordered hover>
+                    <tr>
+                      <th></th>
+                      <th>id</th>
+                      <th>Series Name</th>
+                      <th>Publisher</th>
+                      <th>Start Year</th>
+                      <th>Details</th>
+                    </tr>
+                    <tbody>
+                      {items.map(item => (
+                        <tr>
+                          <td><FaPlus onClick={ () =>{handleSeriesAdd(item)}}/></td>
+                          <td>{item.id}</td>
+                          <td>{item.name}</td>
+                          <td>{item.publisher.name}</td>
+                          <td>{item.start_year}</td>
+                          <td>{item.deck}</td>
+                        </tr>
+                      ))}
+                    </tbody>
+                  </RBS.Table>
+                </div>
             </div>
           ) : (
-            <div className="loading">
-              <PulseLoader />
-            </div>
-          )}
+              <div className="loading">
+                <PulseLoader />
+              </div>
+            )}
+        </div>
+        <div className="seriesConfirm" id="seriesConfirm">
+          <p>are you sure you would like to add {addSeries.name}?</p>
         </div>
       </RBS.Modal.Body >
       <RBS.Modal.Footer>
