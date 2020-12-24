@@ -155,6 +155,11 @@ background-position: 0 0, 15px 15px;
   display: none;
 }
 
+.deleteSeries{
+  margin-left: 90%;
+  margin-top: 10px;
+}
+
 /* MODAL 2 */
 
 .seriesSearchForm{

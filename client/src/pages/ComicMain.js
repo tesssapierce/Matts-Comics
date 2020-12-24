@@ -134,6 +134,30 @@ function ComicMain() {
     setFormEntry({ ...formEntry, [name]: value })
   }
 
+  function getProgress(id){
+    let issuesOwned = 0;
+    const thisSeries = mattsComics.filter(series => id === series.id)
+    console.log(thisSeries[0].issues)
+    if (toggleStatus){
+      thisSeries[0].issues.forEach(issue =>{
+        switch(issue.owned){
+          case true: issuesOwned++;
+            break;
+          default: break; 
+        }
+      })
+    } else {
+      thisSeries[0].issues.forEach(issue =>{
+        switch(issue.owned){
+          case false: issuesOwned++;
+            break;
+          default: break; 
+        }
+      }) 
+    }
+    return (parseInt((issuesOwned/thisSeries[0].issues.length) * 100))
+  }
+
   return (
     <>
       <div className="container-fluid containerStyle">
@@ -164,12 +188,12 @@ function ComicMain() {
             <RBS.Button className="searchBtn" onClick={() => handleNewSeries()}>add series</RBS.Button>
             {mattsComics.map(series => (
               <div className="seriesContainer">
-                <h2>{series.volume} <FaWindowClose onClick={()=>{handleDeleteSeries(series.volume, series._id)}}/></h2>
+                <h2>{series.volume} <RBS.ProgressBar onClick={ ()=> {getProgress(series.id)}} now={getProgress(series.id)} /> <FaWindowClose className="deleteSeries" onClick={()=>{handleDeleteSeries(series.volume, series._id)}}/></h2>
                 <FaPlus onClick={()=>{handleShowAddIssue()}}/>
                 <div className="addIssue" id="addIssue">
                   <RBS.Form inline>
                     <RBS.FormControl type="text" placeholder="i.e. '11'" className="mr-sm-2" value={formEntry.newIssue}  onChange={handleInputChange} name="newIssue" data={series._id}/>
-                    <RBS.Button className="searchBtn" onClick={ ()=>{handleAddIssue(series._id)}}>submit</RBS.Button>
+                    <RBS.Button className="searchBtn" onClick={ ()=>{handleAddIssue(series.id)}}>submit</RBS.Button>
                   </RBS.Form>
                 </div>
                 {toggleStatus ? (
