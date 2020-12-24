@@ -57,6 +57,29 @@ function ComicMain() {
     setModalShow(true)
   }
 
+  function addSeriesToDB(seriesId, seriesName, seriesPublisher, issues, totalIssues){
+    console.log(issues)
+    console.log(totalIssues)
+    const finalIssues = []
+
+    issues.forEach(issue =>{
+      let thisIssue = {
+        number: issue.issue_number,
+        owned: false
+      }
+      finalIssues.push(thisIssue)
+    })
+    const series = {
+      volume: seriesName,
+      id: seriesId,
+      publisher: seriesPublisher,
+      issues: finalIssues
+    }
+    
+    API.addSeries(series)
+    .then(res => getMattsComics())
+    .catch(err => console.log(err));
+  }
 
   return (
     <>
@@ -108,7 +131,7 @@ function ComicMain() {
                   )}
               </div>
             ))}
-            <Modal2 show={modalShow} onHide={() => setModalShow(false)} />
+            <Modal2 addSeriesToDB={addSeriesToDB} show={modalShow} onHide={() => setModalShow(false)} />
           </div>
         </div>
       </div>

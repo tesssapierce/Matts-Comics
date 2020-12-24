@@ -4,14 +4,15 @@ import React, { useState, useEffect } from "react"
 import * as RBS from "react-bootstrap";
 import PulseLoader from "react-spinners/PulseLoader";
 import { FaPlus } from "react-icons/fa";
+import API from "../../utils/API";
 
-function Modal(props) {
+function Modal2(props) {
   const [isLoaded, setIsLoaded] = useState(false);
   const [error, setError] = useState(null);
   const [formEntry, setFormEntry] = useState({})
   const [query, setQuery] = useState("")
   const [items, setItems] = useState([]);
-  const [addSeries, setAddSeries] = useState({})
+  const [addSeries, setAddSeries] = useState({image: [{medium_url: ""}]})
 
   useEffect(() => {
     getQuery()
@@ -48,7 +49,25 @@ function Modal(props) {
     setAddSeries(item)
     document.getElementById("seriesSearch").style.display = "none"
     document.getElementById("seriesConfirm").style.display = "inline"
-    // document.getElementsByClassName("seriesConfirm").style = "display: inline"
+  }
+
+  async function handleSeriesConfirm(){
+    console.log(addSeries.id)
+    const url = "https://lit-badlands-08756.herokuapp.com/https://comicvine.gamespot.com/api/issues/?api_key=2c56cda4910051c1882de0fb411ba569ca71598b&format=json&filter=volume:" + addSeries.id + "&sort=cover_date:asc"
+
+    await fetch(url)
+      .then(res => res.json())
+      .then(
+        (result) => {
+          setIsLoaded(true);
+          props.addSeriesToDB(addSeries.id, addSeries.name, addSeries.publisher.name, result.results, result.number_of_total_results);
+        },
+        (error) => {
+          setIsLoaded(true);
+          setError(error);
+        }
+      )
+    props.onHide()
   }
 
   return (
@@ -106,6 +125,15 @@ function Modal(props) {
         </div>
         <div className="seriesConfirm" id="seriesConfirm">
           <p>are you sure you would like to add {addSeries.name}?</p>
+          <img src={addSeries.image.medium_url} />
+          <p>Details:</p>
+          <ul>
+            <li>id: {addSeries.id}</li>
+            <li>Start Year: {addSeries.start_year}</li>
+            <li>Descrtiption: {addSeries.deck}</li>
+            <li>{addSeries.count_of_issues} total issues</li>
+          </ul>
+          <RBS.Button className="searchBtn" onClick={()=>{handleSeriesConfirm()}}>Add</RBS.Button>
         </div>
       </RBS.Modal.Body >
       <RBS.Modal.Footer>
@@ -115,4 +143,4 @@ function Modal(props) {
   );
 }
 
-export default Modal;
+export default Modal2;

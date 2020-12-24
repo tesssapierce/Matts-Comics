@@ -6,8 +6,8 @@ export default {
     return axios.get("/api/mattscomics");
   },
   // Add a new volume
-  addVolumes: function (volumeData) {
-    return axios.post("/api/volume", volumeData)
+  addSeries: function (series) {
+    return axios.post("/api/mattscomics", series)
   },
   // Add a new issue
   addIssue: function (volume, id) {
