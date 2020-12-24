@@ -2,6 +2,8 @@ import React, { useState, useEffect } from "react";
 import API from "../utils/API";
 import Switch from "react-switch";
 import { ImStarFull, ImStarEmpty } from "react-icons/im";
+import * as RBS from "react-bootstrap";
+import Modal2 from "../components/Modal2"
 
 // ImCheckmark
 // ImCross
@@ -17,7 +19,9 @@ function ComicMain() {
   const [mattsComics, setMattsComics] = useState([])
   const [formObject, setFormObject] = useState({})
   const [toggleStatus, setToggleStatus] = useState(true)
+  const [modalShow, setModalShow] = useState(false);
 
+  
   // Load all books and store them with setBooks
   useEffect(() => {
     getMattsComics()
@@ -49,6 +53,10 @@ function ComicMain() {
     }
   }
 
+  function handleNewSeries(){
+    setModalShow(true)
+  }
+
 
   return (
     <>
@@ -78,14 +86,22 @@ function ComicMain() {
               />
             </label>
 
+            <RBS.Button className="searchBtn" onClick={() => handleNewSeries()}>add series</RBS.Button>
+            
+
             {mattsComics.map(series => (
               <div className="seriesContainer">
                 <h2>{series.volume}</h2>
                 {series.issues.map(issue =>(
-                  <p>{issue.number}</p>
+                  issue.owned ? (
+                    <p>{issue.number}</p>
+                  ): (
+                    <></>
+                  )
                 ))}
               </div>
             ))}
+            <Modal2 show={modalShow} onHide={() => setModalShow(false)}/>
           </div>
         </div>
       </div>

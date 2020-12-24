@@ -47,7 +47,7 @@ function Modal(props) {
         </RBS.Modal.Title>
       </RBS.Modal.Header>
       {isLoaded ? (
-      <RBS.Modal.Body>
+      <RBS.Modal.Body className="modal-body-custom">
         <div className="modalBody2">
           <div className="modalBody3">
         {/* <h4>{items.length} total issues</h4> */}
