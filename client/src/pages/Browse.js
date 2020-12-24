@@ -31,7 +31,7 @@ function Browse(props) {
       getSeriesList()
     }
   }, [])
-
+  
   useEffect(() => {
       getQuery() 
   }, [query])

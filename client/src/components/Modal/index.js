@@ -18,7 +18,7 @@ function Modal(props) {
 
   async function getIssues() {
 
-    const url = "https://comicvine.gamespot.com/api/issues/?api_key=2c56cda4910051c1882de0fb411ba569ca71598b&format=json&limit=2000&filter=volume:" + props.modalVolume.id + "&sort=issue_number:asc"
+    const url = "https://comicvine.gamespot.com/api/issues/?api_key=2c56cda4910051c1882de0fb411ba569ca71598b&format=json&limit=2000&filter=volume:" + props.modalVolume.id + "&sort=cover_date:asc"
 
     await fetch(url)
       .then(res => res.json())

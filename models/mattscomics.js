@@ -9,6 +9,9 @@ const mattsComicsSchema = new Schema({
     {
       number: {
         type: Number
+      },
+      owned: {
+        type: Boolean
       }
     }
   ]
