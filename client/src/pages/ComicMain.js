@@ -4,6 +4,9 @@ import Switch from "react-switch";
 import { ImStarFull, ImStarEmpty } from "react-icons/im";
 import * as RBS from "react-bootstrap";
 import Modal2 from "../components/Modal2"
+import { FaWindowClose } from "react-icons/fa";
+import { confirmAlert } from 'react-confirm-alert';
+import 'react-confirm-alert/src/react-confirm-alert.css'
 
 // ImCheckmark
 // ImCross
@@ -75,8 +78,38 @@ function ComicMain() {
       publisher: seriesPublisher,
       issues: finalIssues
     }
-    
+
     API.addSeries(series)
+    .then(res => getMattsComics())
+    .catch(err => console.log(err));
+  }
+
+  function  handleDeleteSeries(seriesName, seriesId){
+    console.log(seriesId)
+    const options = {
+      childrenElement: () => <div />,
+      customUI: ({ onClose }) =>
+        <div className='custom-ui'>
+          <h1 className="confirmHeader">Are you sure?</h1>
+          <p>Are you sure you would like to delete {seriesName}?</p>
+          <RBS.Button variant="outline-secondary" onClick={onClose}>No</RBS.Button>
+          <RBS.Button variant="outline-secondary" onClick={() => {
+            confirmDelete(seriesId)
+            onClose()
+          }}>Yes, Delete it!</RBS.Button>
+        </div>,
+      closeOnEscape: true,
+      closeOnClickOutside: true,
+      willUnmount: () => { },
+      afterClose: () => { },
+      onClickOutside: () => { },
+      onKeypressEscape: () => { }
+    };
+    confirmAlert(options)
+  }
+
+  function confirmDelete(id){
+    API.deleteSeries(id)
     .then(res => getMattsComics())
     .catch(err => console.log(err));
   }
@@ -111,7 +144,7 @@ function ComicMain() {
             <RBS.Button className="searchBtn" onClick={() => handleNewSeries()}>add series</RBS.Button>
             {mattsComics.map(series => (
               <div className="seriesContainer">
-                <h2>{series.volume}</h2>
+                <h2>{series.volume} <FaWindowClose onClick={()=>{handleDeleteSeries(series.volume, series._id)}}/></h2>
                 {toggleStatus ? (
                   series.issues.map(issue => (
                     issue.owned ? (
