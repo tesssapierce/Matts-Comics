@@ -9,8 +9,12 @@ router.route("/")
 // Matches with "/api/mattsComics/:id"
 router
   .route("/:id")
-  .get(mattsComicsController.findById)
-  .put(mattsComicsController.update)
+  // .get(mattsComicsController.findById)
+  // .put(mattsComicsController.update)
   .delete(mattsComicsController.remove);
+
+router
+  .route("/:id/:newIssue")
+  .put(mattsComicsController.update)
 
 module.exports = router;

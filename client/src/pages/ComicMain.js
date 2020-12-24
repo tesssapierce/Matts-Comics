@@ -7,6 +7,7 @@ import Modal2 from "../components/Modal2"
 import { FaWindowClose } from "react-icons/fa";
 import { confirmAlert } from 'react-confirm-alert';
 import 'react-confirm-alert/src/react-confirm-alert.css'
+import { FaPlus } from "react-icons/fa";
 
 // ImCheckmark
 // ImCross
@@ -20,9 +21,10 @@ import 'react-confirm-alert/src/react-confirm-alert.css'
 function ComicMain() {
   // Setting our component's initial state
   const [mattsComics, setMattsComics] = useState([])
-  const [formObject, setFormObject] = useState({})
+  const [formEntry, setFormEntry] = useState({})
   const [toggleStatus, setToggleStatus] = useState(true)
   const [modalShow, setModalShow] = useState(false);
+  const [newIssue, setNewIssue] = useState();
 
 
   // Load all books and store them with setBooks
@@ -114,6 +116,24 @@ function ComicMain() {
     .catch(err => console.log(err));
   }
 
+  function handleShowAddIssue(){
+    document.getElementById("addIssue").style.display = "inline"
+  }
+
+  function handleAddIssue(id){
+    API.addIssue(id, formEntry.newIssue)
+      .then(res =>{
+        getMattsComics();
+        setFormEntry({ ...formEntry, newIssue: "" })
+      })
+      .catch(err => console.log(err));
+  }
+
+  function handleInputChange(event){
+    const { name, value } = event.target;
+    setFormEntry({ ...formEntry, [name]: value })
+  }
+
   return (
     <>
       <div className="container-fluid containerStyle">
@@ -145,6 +165,13 @@ function ComicMain() {
             {mattsComics.map(series => (
               <div className="seriesContainer">
                 <h2>{series.volume} <FaWindowClose onClick={()=>{handleDeleteSeries(series.volume, series._id)}}/></h2>
+                <FaPlus onClick={()=>{handleShowAddIssue()}}/>
+                <div className="addIssue" id="addIssue">
+                  <RBS.Form inline>
+                    <RBS.FormControl type="text" placeholder="i.e. '11'" className="mr-sm-2" value={formEntry.newIssue}  onChange={handleInputChange} name="newIssue" data={series._id}/>
+                    <RBS.Button className="searchBtn" onClick={ ()=>{handleAddIssue(series._id)}}>submit</RBS.Button>
+                  </RBS.Form>
+                </div>
                 {toggleStatus ? (
                   series.issues.map(issue => (
                     issue.owned ? (

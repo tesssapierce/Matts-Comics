@@ -10,10 +10,9 @@ export default {
     return axios.post("/api/mattscomics", series)
   },
   // Add a new issue
-  addIssue: function (volume, id) {
-    return axios.post("/api/" + volume + "/" + id);
+  addIssue: function (id, newIssue) {
+    return axios.put("/api/mattscomics/" + id + "/" + newIssue);
   },
-  // // Deletes the book with the given id
   deleteSeries: function(id) {
     return axios.delete("/api/mattscomics/" + id);
   },

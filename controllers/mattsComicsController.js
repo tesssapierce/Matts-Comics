@@ -23,7 +23,10 @@ module.exports = {
   },
   update: function(req, res) {
     db.MattsComics
-      .findOneAndUpdate({ _id: req.params.id }, req.body)
+      .findOneAndUpdate(
+        {_id: req.params.id, issues: {$elemMatch: {number: req.params.newIssue}}},
+        {$set: {'issues.$.owned': true
+        }})
       .then(dbModel => res.json(dbModel))
       .catch(err => res.status(422).json(err));
   },

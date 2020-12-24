@@ -151,6 +151,10 @@ background-position: 0 0, 15px 15px;
   display: inherit;
 }
 
+.addIssue{
+  display: none;
+}
+
 /* MODAL 2 */
 
 .seriesSearchForm{
