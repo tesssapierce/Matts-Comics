@@ -51,7 +51,6 @@ function Modal(props) {
         {/* <h4>{items.length} total issues</h4> */}
           <RBS.Table className="issuesTable" striped bordered hover>
             <tr>
-              <th></th>
               <th>Issue #</th>
               <th>Image</th>
               <th>Cover Date</th>
@@ -60,7 +59,6 @@ function Modal(props) {
             <tbody>
               {items.map(item => (
                 <tr>
-                  <td><FaPlus /></td>
                   <td>{item.issue_number}</td>
                   <td><img src={item.image.thumb_url} className="img-fluid"/></td>
                   <td>{item.cover_date}</td>

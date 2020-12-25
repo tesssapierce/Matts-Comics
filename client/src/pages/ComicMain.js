@@ -62,12 +62,12 @@ function ComicMain() {
     setModalShow(true)
   }
 
-  function addSeriesToDB(seriesId, seriesName, seriesPublisher, issues, totalIssues){
+  function addSeriesToDB(seriesId, seriesName, seriesPublisher, issues, totalIssues) {
     console.log(issues)
     console.log(totalIssues)
     const finalIssues = []
 
-    issues.forEach(issue =>{
+    issues.forEach(issue => {
       let thisIssue = {
         number: parseInt(issue.issue_number),
         owned: false
@@ -82,11 +82,11 @@ function ComicMain() {
     }
     console.log(series)
     API.addSeries(series)
-    .then(res => getMattsComics())
-    .catch(err => console.log(err));
+      .then(res => getMattsComics())
+      .catch(err => console.log(err));
   }
 
-  function  handleDeleteSeries(seriesName, seriesId){
+  function handleDeleteSeries(seriesName, seriesId) {
     console.log(seriesId)
     const options = {
       childrenElement: () => <div />,
@@ -110,52 +110,52 @@ function ComicMain() {
     confirmAlert(options)
   }
 
-  function confirmDelete(id){
+  function confirmDelete(id) {
     API.deleteSeries(id)
-    .then(res => getMattsComics())
-    .catch(err => console.log(err));
+      .then(res => getMattsComics())
+      .catch(err => console.log(err));
   }
 
-  function handleShowAddIssue(){
+  function handleShowAddIssue() {
     document.getElementById("addIssue").style.display = "inline"
   }
 
-  function handleAddIssue(id){
+  function handleAddIssue(id) {
     API.addIssue(id, formEntry.newIssue)
-      .then(res =>{
+      .then(res => {
         getMattsComics();
         setFormEntry({ ...formEntry, newIssue: "" })
       })
       .catch(err => console.log(err));
   }
 
-  function handleInputChange(event){
+  function handleInputChange(event) {
     const { name, value } = event.target;
     setFormEntry({ ...formEntry, [name]: value })
   }
 
-  function getProgress(id){
+  function getProgress(id) {
     let issuesOwned = 0;
     const thisSeries = mattsComics.filter(series => id === series.id)
 
-    if (toggleStatus){
-      thisSeries[0].issues.forEach(issue =>{
-        switch(issue.owned){
+    if (toggleStatus) {
+      thisSeries[0].issues.forEach(issue => {
+        switch (issue.owned) {
           case true: issuesOwned++;
             break;
-          default: break; 
+          default: break;
         }
       })
     } else {
-      thisSeries[0].issues.forEach(issue =>{
-        switch(issue.owned){
+      thisSeries[0].issues.forEach(issue => {
+        switch (issue.owned) {
           case false: issuesOwned++;
             break;
-          default: break; 
+          default: break;
         }
-      }) 
+      })
     }
-    return (parseInt((issuesOwned/thisSeries[0].issues.length) * 100))
+    return (parseInt((issuesOwned / thisSeries[0].issues.length) * 100))
   }
 
   return (
@@ -188,30 +188,45 @@ function ComicMain() {
             <RBS.Button className="searchBtn" onClick={() => handleNewSeries()}>add series</RBS.Button>
             {mattsComics.map(series => (
               <div className="seriesContainer">
-                <h2>{series.volume} <FaWindowClose className="deleteBtn" onClick={()=>{handleDeleteSeries(series.volume, series._id)}}/> <RBS.ProgressBar onClick={ ()=> {getProgress(series.id)}} now={getProgress(series.id)} /></h2>
+                <h2>{series.volume} <FaWindowClose className="deleteBtn" onClick={() => { handleDeleteSeries(series.volume, series._id) }} /> <RBS.ProgressBar onClick={() => { getProgress(series.id) }} now={getProgress(series.id)} /></h2>
                 <div>
                   <RBS.Form>
-                    <RBS.FormControl type="text" placeholder="i.e. '11'" className="mr-sm-2" onChange={handleInputChange} name="newIssue"/>
-                    <RBS.Button className="searchBtn" onClick={ ()=>{handleAddIssue(series._id)}}>add issue</RBS.Button>
+                    <RBS.FormControl type="text" placeholder="i.e. '11'" className="mr-sm-2" onChange={handleInputChange} name="newIssue" />
+                    <RBS.Button className="searchBtn" onClick={() => { handleAddIssue(series._id) }}>add issue</RBS.Button>
                   </RBS.Form>
                 </div>
-                {toggleStatus ? (
-                  series.issues.map(issue => (
-                    issue.owned ? (
-                      <p>{issue.number}</p>
+                <RBS.Table className="" striped bordered hover>
+                  <tr>
+                    <th>Issues</th>
+                  </tr>
+                  <tbody>
+                    {toggleStatus ? (
+                      series.issues.map(issue => (
+                        issue.owned ? (
+                          <tr>
+                            <td>
+                              {issue.number}
+                            </td>
+                          </tr>
+                        ) : (
+                            <></>
+                          )
+                      ))
                     ) : (
-                        <></>
-                      )
-                  ))
-                ) : (
-                    series.issues.map(issue => (
-                      !issue.owned ? (
-                        <p>{issue.number}</p>
-                      ) : (
-                          <></>
-                        )
-                    ))
-                  )}
+                        series.issues.map(issue => (
+                          !issue.owned ? (
+                            <tr>
+                              <td>
+                                {issue.number}
+                              </td>
+                            </tr>
+                          ) : (
+                              <></>
+                            )
+                        ))
+                      )}
+                  </tbody>
+                </RBS.Table>
               </div>
             ))}
             <Modal2 addSeriesToDB={addSeriesToDB} show={modalShow} onHide={() => setModalShow(false)} />
