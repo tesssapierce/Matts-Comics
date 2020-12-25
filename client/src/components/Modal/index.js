@@ -47,9 +47,7 @@ function Modal(props) {
         </RBS.Modal.Title>
       </RBS.Modal.Header>
       {isLoaded ? (
-      <RBS.Modal.Body className="modal-body-custom">
-        <div className="modalBody2">
-          <div className="modalBody3">
+      <RBS.Modal.Body className="">
         {/* <h4>{items.length} total issues</h4> */}
           <RBS.Table className="issuesTable" striped bordered hover>
             <tr>
@@ -64,15 +62,13 @@ function Modal(props) {
                 <tr>
                   <td><FaPlus /></td>
                   <td>{item.issue_number}</td>
-                  <td><img src={item.image.thumb_url}/></td>
+                  <td><img src={item.image.thumb_url} className="img-fluid"/></td>
                   <td>{item.cover_date}</td>
                   <td><a href={item.site_detail_url}>visit here</a></td>
                 </tr>
               ))}
             </tbody>
           </RBS.Table>
-          </div>
-        </div>
       </RBS.Modal.Body>
       ) : (
                 <div className="loading">

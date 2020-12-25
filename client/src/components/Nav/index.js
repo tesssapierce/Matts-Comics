@@ -1,26 +1,18 @@
 import React, { useState, useEffect } from "react"
 import * as RBS from "react-bootstrap";
-import logo from "../../images/mattscomics.svg"
+import logo from "../../images/mattscomics.png"
 
 function Nav(props) {
 
-
-  const [formEntry, setFormEntry] = useState({})
-
-  function handleInputChange(event) {
-    const { name, value } = event.target;
-    setFormEntry({ ...formEntry, [name]: value })
-  };
-
   function handleSubmit(event){
     event.preventDefault()
-    props.searchQuery(formEntry.query)
+    props.logout()
   }
 
   return (
     <div className="navbarContainer">
       <div className="navImg">
-      <img src={logo}/>
+      <img src={logo} className="logoImg img-fluid"/>
       </div>
       <RBS.Navbar expand="lg" className="containerStyle"> 
         <RBS.Navbar.Toggle aria-controls="basic-navbar-nav" />

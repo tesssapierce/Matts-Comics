@@ -50,6 +50,10 @@
   transform: scale(1.1);
 }
 
+.logoImg{
+  width: 25%
+}
+
 /* Resuable */
 
 .containerStyle{
@@ -68,8 +72,8 @@ h1, h2 {
 }
 
 .centered {
-  text-align: center;
-  margin: 0 auto;
+  text-align: center !important;
+  margin: 0 auto !important;
 }
 
 /* LogIn */
@@ -135,6 +139,12 @@ background-position: 0 0, 15px 15px;
 .issuesTable{
   background-color:rgba(255, 255, 255, .7);
   border: 5px solid black;
+  width: 40rem;
+  overflow: none !important;
+}
+
+.newSeriesResults{
+  display:none;
 }
 
 /* HOME */
@@ -155,9 +165,9 @@ background-position: 0 0, 15px 15px;
   display: none;
 }
 
-.deleteSeries{
-  margin-left: 90%;
-  margin-top: 10px;
+.deleteBtn{
+  position: absolute;
+  right: 50px !important;
 }
 
 /* MODAL 2 */
@@ -178,5 +188,27 @@ background-position: 0 0, 15px 15px;
     right: auto;
     position: inherit;
     margin: 0 auto;
+  }
+
+  .logoImg{
+    width: 65%
+  }
+
+  .issuesTable{
+    font-size: .75rem;
+    width: 100%;
+  }
+
+  .table th, .table td{
+    padding: .25rem !important;
+  }
+
+  .searchBtn{
+    padding: 5px;
+    margin: 5px;
+  }
+
+  .containerStyle{
+    margin: 15px;
   }
 }

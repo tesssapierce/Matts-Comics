@@ -13,6 +13,7 @@ router
   // .put(mattsComicsController.update)
   .delete(mattsComicsController.remove);
 
+  // Matches with "/api/mattsComics/:id/:newIssue"
 router
   .route("/:id/:newIssue")
   .put(mattsComicsController.update)

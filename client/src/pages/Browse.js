@@ -76,7 +76,7 @@ function Browse(props) {
   return (
     <>
       <div className="container-fluid containerStyle">
-        <div className="row">
+        <div className="row centered">
           <div className="col-12">
           <RBS.Form inline className="browseHeader">
             { query ? (

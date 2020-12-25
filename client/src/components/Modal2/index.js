@@ -25,6 +25,7 @@ function Modal2(props) {
 
   function handleSubmit(event) {
     event.preventDefault()
+    document.getElementById("newSeriesResults").style.display = "inline"
     setQuery(formEntry.query)
   }
 
@@ -49,6 +50,11 @@ function Modal2(props) {
     setAddSeries(item)
     document.getElementById("seriesSearch").style.display = "none"
     document.getElementById("seriesConfirm").style.display = "inline"
+  }
+
+  function handleHideConfirm(){
+    document.getElementById("seriesConfirm").style.display = "none"
+    document.getElementById("seriesSearch").style.display = "inline"
   }
 
   async function handleSeriesConfirm(){
@@ -91,13 +97,12 @@ function Modal2(props) {
           </div>
           {/* Results */}
           {isLoaded ? (
-            <div className="row">
+            <div className="row newSeriesResults" id="newSeriesResults">
                 <div className="col-12 col-sm-6 col-lg-3">
                   <RBS.Table className="issuesTable" striped bordered hover>
                     <tr>
                       <th></th>
-                      <th>id</th>
-                      <th>Series Name</th>
+                      <th>Name</th>
                       <th>Publisher</th>
                       <th>Start Year</th>
                       <th>Details</th>
@@ -106,7 +111,6 @@ function Modal2(props) {
                       {items.map(item => (
                         <tr>
                           <td><FaPlus onClick={ () =>{handleSeriesAdd(item)}}/></td>
-                          <td>{item.id}</td>
                           <td>{item.name}</td>
                           <td>{item.publisher.name}</td>
                           <td>{item.start_year}</td>
@@ -125,7 +129,7 @@ function Modal2(props) {
         </div>
         <div className="seriesConfirm" id="seriesConfirm">
           <p>are you sure you would like to add {addSeries.name}?</p>
-          <img src={addSeries.image.medium_url} />
+          <img src={addSeries.image.medium_url} className="img-fluid"/>
           <p>Details:</p>
           <ul>
             <li>id: {addSeries.id}</li>
@@ -137,6 +141,7 @@ function Modal2(props) {
         </div>
       </RBS.Modal.Body >
       <RBS.Modal.Footer>
+      <RBS.Button className="searchBtn" onClick={handleHideConfirm}>Back</RBS.Button>
         <RBS.Button className="searchBtn" onClick={props.onHide}>Close</RBS.Button>
       </RBS.Modal.Footer>
     </RBS.Modal >

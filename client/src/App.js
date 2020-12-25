@@ -40,10 +40,14 @@ function App() {
     localStorage.setItem("isAuth", JSON.stringify(isAuth))
   }
 
+  function logout(){
+    setIsAuth(false)
+  }
+
   return (
     <Router>
       <div>
-        <Nav isAuth={isAuth} setAuth={setAuth}/>
+        <Nav isAuth={isAuth} setAuth={setAuth} logout={logout}/>
         <Switch>
           {isAuth ? (
             <>
