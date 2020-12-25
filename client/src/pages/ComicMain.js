@@ -69,18 +69,18 @@ function ComicMain() {
 
     issues.forEach(issue =>{
       let thisIssue = {
-        number: issue.issue_number,
+        number: parseInt(issue.issue_number),
         owned: false
       }
       finalIssues.push(thisIssue)
     })
     const series = {
       volume: seriesName,
-      id: seriesId,
+      id: parseInt(seriesId),
       publisher: seriesPublisher,
       issues: finalIssues
     }
-
+    console.log(series)
     API.addSeries(series)
     .then(res => getMattsComics())
     .catch(err => console.log(err));
