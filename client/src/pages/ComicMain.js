@@ -1,22 +1,12 @@
 import React, { useState, useEffect } from "react";
 import API from "../utils/API";
 import Switch from "react-switch";
-import { ImStarFull, ImStarEmpty } from "react-icons/im";
 import * as RBS from "react-bootstrap";
 import Modal2 from "../components/Modal2"
 import { FaWindowClose } from "react-icons/fa";
 import { confirmAlert } from 'react-confirm-alert';
 import 'react-confirm-alert/src/react-confirm-alert.css'
-import { FaPlus } from "react-icons/fa";
-
-// ImCheckmark
-// ImCross
-
-// ImStarFull
-// ImStarEmpty
-
-// ImEye
-// ImEyeBlocked
+import { MDBDataTableV5 } from 'mdbreact';
 
 function ComicMain() {
   // Setting our component's initial state
@@ -158,6 +148,39 @@ function ComicMain() {
     return (parseInt((issuesOwned / thisSeries[0].issues.length) * 100))
   }
 
+  function getTableData(series){
+    let rowsData = []
+
+    if (toggleStatus){
+      series.issues.map(issue =>{
+        if(issue.owned){
+          rowsData.push({issue: issue.number})
+        }
+      })
+    } else {
+      series.issues.map(issue =>{
+        if(!issue.owned){
+          rowsData.push({issue: issue.number})
+        }
+      })
+    }
+    
+    const data = {
+      columns: [
+        {
+          label: 'Issue',
+          field: 'issue',
+          sort: 'asc',
+          width: 150
+        }
+      ],
+      rows: rowsData
+    };
+    console.log(data)
+    return data
+  }
+
+
   return (
     <>
       <div className="container-fluid containerStyle">
@@ -189,44 +212,15 @@ function ComicMain() {
             {mattsComics.map(series => (
               <div className="seriesContainer">
                 <h2>{series.volume} <FaWindowClose className="deleteBtn" onClick={() => { handleDeleteSeries(series.volume, series._id) }} /> <RBS.ProgressBar onClick={() => { getProgress(series.id) }} now={getProgress(series.id)} /></h2>
+
+                <MDBDataTableV5 data={getTableData(series)} small />
                 <div>
                   <RBS.Form>
                     <RBS.FormControl type="text" placeholder="i.e. '11'" className="mr-sm-2" onChange={handleInputChange} name="newIssue" />
                     <RBS.Button className="searchBtn" onClick={() => { handleAddIssue(series._id) }}>add issue</RBS.Button>
                   </RBS.Form>
                 </div>
-                <RBS.Table className="" striped bordered hover>
-                  <tr>
-                    <th>Issues</th>
-                  </tr>
-                  <tbody>
-                    {toggleStatus ? (
-                      series.issues.map(issue => (
-                        issue.owned ? (
-                          <tr>
-                            <td>
-                              {issue.number}
-                            </td>
-                          </tr>
-                        ) : (
-                            <></>
-                          )
-                      ))
-                    ) : (
-                        series.issues.map(issue => (
-                          !issue.owned ? (
-                            <tr>
-                              <td>
-                                {issue.number}
-                              </td>
-                            </tr>
-                          ) : (
-                              <></>
-                            )
-                        ))
-                      )}
-                  </tbody>
-                </RBS.Table>
+               
               </div>
             ))}
             <Modal2 addSeriesToDB={addSeriesToDB} show={modalShow} onHide={() => setModalShow(false)} />
