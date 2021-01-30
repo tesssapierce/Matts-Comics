@@ -56,7 +56,8 @@ function Browse(props) {
   }, [])
   
   useEffect(() => {
-      getQuery() 
+      getQuery()
+      setIsLoaded(false)
   }, [query])
 
   async function getSeriesList() {
