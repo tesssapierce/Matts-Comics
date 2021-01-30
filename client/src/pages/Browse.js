@@ -9,9 +9,32 @@ function Browse(props) {
   const [isLoaded, setIsLoaded] = useState(false);
   const [items, setItems] = useState([]);
   const [formEntry, setFormEntry] = useState({})
-  const [query, setQuery] = useState("")
   const [modalShow, setModalShow] = useState(false);
   const [modalVolume, setModalVolume] =useState([])
+  const [queryHistory, setQueryHistory] = useState([])
+  const [query, setQuery] = useState(queryHistory[0])
+
+  useEffect(()=>{
+    const localHistory = localStorage.getItem("localHistory")
+    if (localHistory) {
+      setQueryHistory(JSON.parse(localHistory))
+    }
+  }, [])
+
+  useEffect(() => {
+
+    if (query){
+      if (!queryHistory.includes(query)){
+        queryHistory.push(query)
+        console.log(queryHistory)
+        saveToLocalStorage();
+      }
+    }
+  }, [query])
+
+  function saveToLocalStorage() {
+    localStorage.setItem("localHistory", JSON.stringify(queryHistory))
+  }
 
   function handleInputChange(event) {
     const { name, value } = event.target;
@@ -42,8 +65,8 @@ function Browse(props) {
       .then(res => res.json())
       .then(
         (result) => {
-          setIsLoaded(true);
           setItems(result.results);
+          setIsLoaded(true);
         },
         (error) => {
           setIsLoaded(true);
@@ -58,12 +81,12 @@ function Browse(props) {
       .then(res => res.json())
       .then(
         (result) => {
-          setIsLoaded(true);
           setItems(result.results);
+          setIsLoaded(true);
         },
         (error) => {
-          setIsLoaded(true);
           setError(error);
+          setIsLoaded(true);
         }
       )
   }
@@ -73,11 +96,21 @@ function Browse(props) {
     setModalVolume(item)
   }
 
+  function handlePastQuery(query){ 
+    console.log(query)
+    setQuery(query)
+  }
+
+  function handleClearSearhHistory(){
+    localStorage.removeItem("localHistory")
+    setQueryHistory([])
+  }
+
   return (
     <>
       <div className="container-fluid containerStyle">
         <div className="row centered">
-          <div className="col-12">
+          <div className="col-2">
           <RBS.Form inline className="browseHeader">
             { query ? (
               <p className="centered">results for {query}</p>
@@ -89,6 +122,27 @@ function Browse(props) {
             <RBS.Button className="searchBtn" onClick={handleSubmit}>Search</RBS.Button>
             </div>
           </RBS.Form>
+          <div className="row">
+            {queryHistory.map(query => (
+              <div className="col-12">
+              <button className="searchHistoryBtn btn" onClick={() => handlePastQuery(query)}>{query}</button>
+              </div>
+            ))}
+
+            { queryHistory.length > 0 ? (
+            <div className="col-12">
+              <button className="searchHistoryBn btn" onClick={() => handleClearSearhHistory()}>Clear Search History</button>
+            </div>
+
+            ):(
+              <div className="col-12">
+              {/* <button className="searchHistoryBn btn" onClick={() => handleClearSearhHistory()}>Clear Search History</button> */}
+            </div>
+            )}
+          </div>
+
+          </div>
+          <div className="col-10">
             {isLoaded ? (
               <>
               <div className="row">

@@ -1,3 +1,7 @@
+div {
+  border-radius: 5px;
+}
+
 /* Coming Soon */
 
 .comingSoonHeader{
@@ -47,6 +51,20 @@
 }
 
 .searchBtn:hover {
+  transform: scale(1.1);
+}
+
+.searchHistoryBtn{
+  background-color: #DEDEDE !important;
+  transition: all .2s ease-in-out;
+  /* font-family: 'Bangers', cursive; */
+  color: #000000;
+  letter-spacing: 2px;
+  margin-bottom: 20px;
+
+}
+
+.searchHistoryBtn:hover {
   transform: scale(1.1);
 }
 
@@ -103,13 +121,15 @@ h1, h2 {
 }
 
 .searchForm{
-  right: 0;
-  position: absolute;
-  margin-right: 20px;
+  padding: 20px;
 }
 
 .browseHeader{
   padding: 20px;
+}
+
+.mr-sm-2{
+  margin-bottom: 10px !important;
 }
 
 /* MODAL */
