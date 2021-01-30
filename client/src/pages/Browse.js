@@ -111,7 +111,7 @@ function Browse(props) {
     <>
       <div className="container-fluid containerStyle">
         <div className="row centered">
-          <div className="col-2">
+          <div className="col-12 col-md-2">
           <RBS.Form inline className="browseHeader">
             { query ? (
               <p className="centered">results for {query}</p>
@@ -143,7 +143,7 @@ function Browse(props) {
           </div>
 
           </div>
-          <div className="col-10">
+          <div className="col-12 col-md-10">
             {isLoaded ? (
               <>
               <div className="row">
